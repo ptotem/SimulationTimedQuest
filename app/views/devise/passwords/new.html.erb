@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-sm-6 col-md-4 col-md-offset-4">
+    <div class="account-wall">
+      <h3 class="form_heading">Lost Password?</h3>
+
+      <img src="/assets/line.png" class="line_style">
+      <div class="text-style" style="margin-top: 3%;">ok don't panic.You can recover it here.</div>
+
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { :class=>"form-signin", method: :post }) do |f| %>
+          <%= devise_error_messages! %>
+          <%= f.email_field :email, autofocus: true, :placeholder=>"Email", :class=>"form-control" %>
+
+          <%= f.submit "Send Me", :class=>"btn btn-lg button_style center-block" %>
+      <% end %>
+
+      <img src="/assets/line.png" class="line_style">
+      <div class="text-style" style="margin-top:5%;">You remember your password?Brillant</div>
+      <div class="text-style" style="color: #000000">
+        <%= render "devise/shared/links" %>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+

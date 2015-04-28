@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
+
+    <div class="account-wall">
+      <h3 class="form_heading">Log in to play</h3>
+      <!--<hr class="line_style">-->
+      <img src="/assets/line.png" class="line_style">
+
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), :html => {:class => "form-signin"}) do |f| %>
+          <%= devise_error_messages! %>
+          <%= f.email_field :email, autofocus: true, :placeholder => "Email", :class => "form-control", :required=>true %>
+
+          <%= f.password_field :password, autocomplete: "off", :placeholder => "Password", :class => "form-control", :required=>true %>
+
+          <% if devise_mapping.rememberable? -%>
+              <div class="text-style" style="padding: 2% 0 2% 0;">
+                <%= f.check_box :remember_me,:class => "check_box_style" %>
+                <%= f.label :remember_me %>
+              </div>
+          <% end -%>
+
+          <%= f.submit "Sign in", :class => "btn btn-lg  btn-block button_style", :style=>"margin-top:0;" %>
+
+      <% end %>
+
+      <div style="text-align: center">
+        <%= render "devise/shared/links" %>
+      </div>
+
+    </div>
+
+    <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+        <!--<div style="text-align: center; padding-top: 5px; font-size: 14px;">-->
+        <div class="text_style_bottom">
+          <%= link_to "Create an account", new_registration_path(resource_name), :class => "color-text-black" %>
+        </div>
+    <% end -%>
+
+    <hr>
+    <p class="text-center">Site best viewed in Mozilla Firefox and Google Chrome.</p>
+
+  </div>
+</div>

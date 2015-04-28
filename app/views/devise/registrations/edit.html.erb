@@ -1,0 +1,73 @@
+<style>
+    /*.change-pwd-btn*/
+    /*{*/
+    /*background:linear-gradient(to bottom, #45484d 0%,#000000 100%) !important;*/
+    /*color:white !important;*/
+    /*width: 12%;*/
+    /*font-size: 1.4em;*/
+    /*padding: 1%;*/
+    /*}*/
+
+    .custom-input-field-style{
+        margin-bottom: -1px;
+        border:1px;
+        border-radius:7px;
+        background-color: #c7c5c5;
+    }
+
+    label{
+        margin-bottom: 0;
+        margin-top: 14px;
+    }
+</style>
+
+<!--<h2>Edit <%#= resource_name.to_s.humanize %></h2>-->
+
+
+<div class="row">
+  <div class="col-sm-6 col-md-4 col-md-offset-4">
+    <div class="account-wall">
+      <h3 class="form_heading">Edit an account</h3>
+      <img src="/assets/line.png" class="line_style">
+
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name),html: { method: :put }) do |f| %>
+          <%= devise_error_messages! %>
+
+          <div style="display: none;">
+            <%= f.label :email %><br />
+            <%= f.email_field :email %>
+          </div>
+
+          <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+              <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+          <% end %>
+
+          <div>
+            <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+            <%= f.password_field :password, autocomplete: "off", :class=>"custom-input-field-style form-control" %>
+          </div>
+
+          <div>
+            <%= f.label :password_confirmation %><br />
+            <%= f.password_field :password_confirmation, autocomplete: "off", :class=>"custom-input-field-style form-control" %>
+          </div>
+
+          <div>
+            <%= f.label :current_password %> <i><br>(we need your current password to confirm your changes)</i><br />
+            <%= f.password_field :current_password, autocomplete: "off", :class=>"custom-input-field-style form-control" %>
+          </div>
+
+          <br>
+          <div>
+            <%= f.submit "Update", :class=>"change-pwd-btn btn btn-lg  btn-block button_style" %>
+          </div>
+          <p class="text-center" style="color: #ffffff"><%= link_to "Back", :back,:class=>"text-style"%></p>
+      <% end %>
+
+      <!--<h3>Cancel my account</h3>-->
+
+      <!--<p>Unhappy? <%#= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>-->
+
+    </div>
+  </div>
+</div>

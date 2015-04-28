@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-sm-6 col-md-4 col-md-offset-4">
+    <!--<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xs-offset-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4">-->
+
+    <div class="account-wall">
+      <h3 class="form_heading">Create an account</h3>
+      <!--<hr class="line_style">-->
+      <img src="/assets/line.png" class="line_style">
+
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), :html => {:class => "form-signin"}) do |f| %>
+          <%= devise_error_messages! %>
+          <%= f.email_field :email, autofocus: true, :placeholder => "Email", :class => "form-control", :required=>true %>
+
+          <%#= f.text_field :name, :placeholder => "Name", :class => "form-control", :required=>true, :style=>"margin-top: 6px;" %>
+
+          <%= f.password_field :password, autocomplete: "off", :placeholder => "Password", :class => "form-control", :required=>true %>
+          <% if @validatable %>
+              <em>(<%= @minimum_password_length %> characters minimum)</em>
+          <% end %><br />
+
+          <%= f.password_field :password_confirmation, autocomplete: "off", :placeholder => "Password Confirmation", :class => "form-control", :required=>true %>
+
+          <%= f.submit "Sign up", :class => "btn btn-lg  btn-block button_style" %>
+
+      <% end %>
+
+      <div style="text-align: center">
+        <%= render "devise/shared/links" %>
+      </div>
+
+    </div>
+
+    <hr>
+    <p class="text-center">Site best viewed in Mozilla Firefox and Google Chrome.</p>
+
+  </div>
+</div>
