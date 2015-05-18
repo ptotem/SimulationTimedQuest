@@ -5,7 +5,8 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.1'
 
 # Use mysql as the database for Active Record
-gem 'mysql2'
+# gem 'mysql2'
+gem 'sqlite3'
 
 gem 'execjs'
 gem 'therubyracer'
@@ -13,6 +14,9 @@ gem 'therubyracer'
 gem 'devise'
 gem 'cancan'
 
+
+gem 'rails_admin'
+gem "rails_admin_import"
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets

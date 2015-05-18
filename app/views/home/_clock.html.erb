@@ -1,0 +1,32 @@
+<div class="clock"></div>
+
+
+<script type="text/javascript">
+    var clock;
+    var userTime;
+    $(document).ready(function() {
+        if (<%= @userTime == 0 %>  ){
+          userTime = 7200
+        }
+        else{
+            userTime = <%= @userTime %>
+        }
+
+        clock = $('.clock').FlipClock(userTime, {
+            clockFace: 'HourlyCounter',
+            countdown: true,
+            callbacks: {
+                stop: function() {
+                    $('.main-wrapper-game').hide()
+                    alert("Your Time is Up ")
+                }
+            }
+
+        });
+
+    });
+
+
+
+
+</script>

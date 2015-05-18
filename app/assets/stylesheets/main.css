@@ -545,3 +545,24 @@ a:hover {
 }
 
 /*$("#sim_user_data_budget_available").val(user_budget_manipulated);*/
+
+.current-game-container {
+    height: 100px;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.current-game-container .game {
+    padding: 5px;
+}
+
+.current-game-container .game .bullet {
+    /*padding: 5px;*/
+}
+
+.current-game-container .game.current-game {
+    font-weight: bolder;
+    background: rgba(1,80,150,0.7);
+    color: #ccc;
+}

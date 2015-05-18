@@ -1,0 +1,24 @@
+
+<div class="row main-wrapper-game">
+  <div class="col-lg-8">
+    <iframe src="/Quinterrogation/story.html" width="640px" height="480px" id="quint_iframe"></iframe>
+  </div>
+  <div class="col-lg-4">
+    <%= render(:partial => "clock" ,:controller=>"home") %>
+    <div class="current-game-container">
+		<div class="game">
+			<span class="game-name" style="font-weight: bolder; font-size: 20px">SECTIONS IN THIS ASSESSMENT</span>
+		</div>
+		<div class="game">
+			<span class="bullet">&raquo;</span> <span class="game-name">Section I: Single Response Questions</span>
+		</div>
+		<div class="game">
+			<span class="bullet">&raquo;</span> <span class="game-name">Section II: Multiple Response Questions</span>
+		</div>
+		<div class="game current-game">
+			<span class="bullet">&raquo;</span> <span class="game-name">Section III: Simulation</span>
+		</div>
+	</div>
+
+  </div>
+</div>

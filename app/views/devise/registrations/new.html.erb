@@ -1,5 +1,27 @@
 <div class="row">
-  <div class="col-sm-6 col-md-4 col-md-offset-4">
+  <div class="col-sm-6 col-md-6">
+
+    <div class="account-wall" style="background:none;border:none;">
+    <h3 style="font-weight:bold;">Welcome!</h3><h4 style="font-weight:bold;"> This assessment is your chance to qualify for the BIG THING!</h4>
+<br><br>
+  <h4>
+    Instructions:
+  </h4>
+  <ul style="padding-left: 16px;">
+
+  <li>This assessment is divided into 2 sections - Quiz and Simulation. Both the sections have to be completed in order to qualify for the next stage.</li>
+  <li>You have only 1 attempt. Do not log out until you have completed both the sections.</li>
+  <li>You have 2 hours to complete this assessment</li>
+  </ul>
+  <h4>
+    Best of Luck!
+  </h4>
+</div>
+
+
+
+  </div>
+  <div class="col-sm-6 col-md-4">
     <!--<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xs-offset-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4">-->
 
     <div class="account-wall">
@@ -11,7 +33,7 @@
           <%= devise_error_messages! %>
           <%= f.email_field :email, autofocus: true, :placeholder => "Email", :class => "form-control", :required=>true %>
 
-          <%#= f.text_field :name, :placeholder => "Name", :class => "form-control", :required=>true, :style=>"margin-top: 6px;" %>
+          <%= f.text_field :name, :placeholder => "Name", :class => "form-control", :required=>true, :style=>"margin-top: 6px;" %>
 
           <%= f.password_field :password, autocomplete: "off", :placeholder => "Password", :class => "form-control", :required=>true %>
           <% if @validatable %>
