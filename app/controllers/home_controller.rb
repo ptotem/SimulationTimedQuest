@@ -20,20 +20,24 @@ class HomeController < ApplicationController
     # return
 
     @user = current_user
+    @section = params[:section]
     @question = params[:question]
     @selected_option = params[:selected_option]
     @correct_option = params[:correct_option]
-
     @option_score = params[:option_score]
     @option_status = params[:option_status]
-    # @user_res = UserResult.create!(:question => @question,:option_selected=>@selected_option,:correct_option=>@correct_option ,:option_score=>@option_score ,:user_id=>current_user.id)
+
     @user_res = UserResult.create!(
-      :option_status=> @option_status,
+      :user_id => current_user.id,
+      :user_name => current_user.name,
+      :section => @section,
       :question => @question,
       :selected_option => @selected_option,
-      :correct_option=>@correct_option,
-      :option_score=>@option_score,
-      :user_id=>current_user.id)
+      :correct_option => @correct_option,
+      :option_status => @option_status,
+      :option_score => @option_score
+    )
+
     @user_res.save!
     @user.total_score = @user.total_score + @user_res.option_score
     @user.save!
@@ -58,6 +62,7 @@ class HomeController < ApplicationController
     @userTime = @user.time_spent
 
     @gs = @user.game_status
+
     if @gs.mcq
       redirect_to('/msq')
     else
@@ -71,6 +76,11 @@ class HomeController < ApplicationController
     @userTime = @user.time_spent
 
     @gs = @user.game_status
+
+    if !@gs.mcq
+      redirect_to('/mcq')
+    end
+
     if @gs.msq
       redirect_to('/quinterrogation')
     else
@@ -85,6 +95,15 @@ class HomeController < ApplicationController
     @userTime = @user.time_spent
 
     @gs = @user.game_status
+
+    if !@gs.mcq
+      redirect_to('/mcq')
+    else
+      if !@gs.msq
+        redirect_to('/msq')
+      end
+    end
+
     if @gs.quinterrogation
       redirect_to('/game_end')
     else
@@ -103,14 +122,23 @@ class HomeController < ApplicationController
     @userTime = @user.time_spent
 
     @gs = @user.game_status
+
+    if !@gs.mcq
+      redirect_to('/mcq')
+    else
+      if !@gs.msq
+        redirect_to('/msq')
+      end
+    end
+
     if @gs.quinterrogation
       redirect_to('/game_end')
     else
-      if @user.category == "sr"
+      if @user.category == "jr"
+        redirect_to('/quinterrogation1')
+      else
         # @gs.quinterrogation = true
         # @gs.save
-      else
-        # redirect_to('/game_end')
       end
     end
   end
