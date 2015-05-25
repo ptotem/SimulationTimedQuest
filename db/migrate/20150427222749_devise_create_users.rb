@@ -5,7 +5,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :name,               null: false, default: ""
       t.string :email,              null: false, default: ""
       t.string :category,           null: false, default: "jr"
-      t.integer :total_score,       null: false, default: 0
+      t.float :total_score,       null: false, default: 0
       t.integer :time_spent,        null: false, default: 0
       t.string :encrypted_password, null: false, default: ""
 

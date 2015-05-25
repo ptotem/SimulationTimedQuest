@@ -66,8 +66,8 @@ class HomeController < ApplicationController
     if @gs.mcq
       redirect_to('/msq')
     else
-      # @gs.mcq = true
-      # @gs.save
+      @gs.mcq = true
+      @gs.save 
     end
   end
 
@@ -77,16 +77,17 @@ class HomeController < ApplicationController
 
     @gs = @user.game_status
 
-    if !@gs.mcq
-      redirect_to('/mcq')
+    if @gs.msq
+      if @user.category = 'jr'
+        redirect_to('/quinterrogation1')
+      else
+        redirect_to('/quinterrogation2')
+      end
+    else
+      @gs.msq = true
+      @gs.save 
     end
 
-    if @gs.msq
-      redirect_to('/quinterrogation')
-    else
-      # @gs.msq = true
-      # @gs.save
-    end
   end
 
   def quinterrogation1
@@ -96,24 +97,17 @@ class HomeController < ApplicationController
 
     @gs = @user.game_status
 
-    if !@gs.mcq
-      redirect_to('/mcq')
+    if @user.category == 'sr'
+      redirect_to('/quinterrogation2')
     else
-      if !@gs.msq
-        redirect_to('/msq')
-      end
-    end
-
-    if @gs.quinterrogation
-      redirect_to('/game_end')
-    else
-      if @user.category == "sr"
-        redirect_to('/quinterrogation2')
+      if @gs.quinterrogation
+        redirect_to('/game_end')
       else
-        # @gs.quinterrogation = true
-        # @gs.save
+        @gs.quinterrogation = true
+        @gs.save
       end
-    end
+    end  
+
   end
 
   def quinterrogation2
@@ -123,24 +117,17 @@ class HomeController < ApplicationController
 
     @gs = @user.game_status
 
-    if !@gs.mcq
-      redirect_to('/mcq')
+    if @user.category == 'jr'
+      redirect_to('/quinterrogation1')
     else
-      if !@gs.msq
-        redirect_to('/msq')
-      end
-    end
-
-    if @gs.quinterrogation
-      redirect_to('/game_end')
-    else
-      if @user.category == "jr"
-        redirect_to('/quinterrogation1')
+      if @gs.quinterrogation
+        redirect_to('/game_end')
       else
-        # @gs.quinterrogation = true
-        # @gs.save
+        @gs.quinterrogation = true
+        @gs.save
       end
-    end
+    end 
+
   end
 
 end

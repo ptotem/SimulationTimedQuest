@@ -8,7 +8,7 @@ class CreateUserResults < ActiveRecord::Migration
       t.text      :selected_option
       t.text      :correct_option
       t.text    :option_status
-      t.integer   :option_score, :default => 0
+      t.float   :option_score, :default => 0
 
       t.timestamps null: false
     end
