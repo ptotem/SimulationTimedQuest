@@ -57,6 +57,40 @@ class HomeController < ApplicationController
     @userTime = @user.time_spent
   end
 
+  def game_complete
+    @user = current_user
+    @userTime = @user.time_spent
+
+    @gs = @user.game_status
+
+    @redirect = false
+    @redirectTo = ''
+
+    if !@gs.quinterrogation
+      @redirect = true
+      if @user.category = 'jr'
+        @redirectTo = '/quinterrogation1'
+      else
+        @redirectTo = '/quinterrogation2'
+      end
+    end
+
+    if !@gs.msq
+      @redirect = true
+      @redirectTo = '/msq'
+    end
+
+    if !@gs.mcq
+      @redirect = true
+      @redirectTo = '/mcq'
+    end
+
+    if @redirect
+      redirect_to(@redirectTo)
+    end
+
+  end
+
   def mcq
     @user = current_user
     @userTime = @user.time_spent
