@@ -2,7 +2,8 @@ class HomeController < ApplicationController
 
   def update_time
     @user = current_user
-    @user.time_spent = params[:time_spent][0]
+    @user.time_left = params[:time_left][0]
+    @user.time_spent = (7200 - @user.time_left)/60
     @user.save!
     render :json=>{status:"OK"}
   end
@@ -10,7 +11,7 @@ class HomeController < ApplicationController
 
   def index
     @user = current_user
-    @userTime = @user.time_spent
+    @userTime = @user.time_left
   end
 
 
@@ -53,13 +54,11 @@ class HomeController < ApplicationController
   end
 
   def simulation
-    @user = current_user
-    @userTime = @user.time_spent
   end
 
   def game_complete
     @user = current_user
-    @userTime = @user.time_spent
+    @userTime = @user.time_left
 
     @gs = @user.game_status
 
@@ -93,7 +92,7 @@ class HomeController < ApplicationController
 
   def mcq
     @user = current_user
-    @userTime = @user.time_spent
+    @userTime = @user.time_left
 
     @gs = @user.game_status
 
@@ -107,7 +106,7 @@ class HomeController < ApplicationController
 
   def msq
     @user = current_user
-    @userTime = @user.time_spent
+    @userTime = @user.time_left
 
     @gs = @user.game_status
 
@@ -127,7 +126,7 @@ class HomeController < ApplicationController
   def quinterrogation1
     # for 'junior' users
     @user = current_user
-    @userTime = @user.time_spent
+    @userTime = @user.time_left
 
     @gs = @user.game_status
 
@@ -147,7 +146,7 @@ class HomeController < ApplicationController
   def quinterrogation2
     # for 'senior' users
     @user = current_user
-    @userTime = @user.time_spent
+    @userTime = @user.time_left
 
     @gs = @user.game_status
 
