@@ -5,12 +5,8 @@
     var clock;
     var userTime;
     $(document).ready(function() {
-        if (<%= @userTime == 0 %>  ){
-          userTime = 7200
-        }
-        else{
-            userTime = <%= @userTime %>
-        }
+
+        userTime = <%= @userTime %>
 
         clock = $('.clock').FlipClock(userTime, {
             clockFace: 'HourlyCounter',

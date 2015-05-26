@@ -66,9 +66,9 @@
     <script type="text/javascript">
 
       function user_time_spent(){
-          time_spent = clock.getTime().time
-          var data = {time_spent:[]};
-          data["time_spent"].push(time_spent);
+          time_left = clock.getTime().time
+          var data = {time_left:[]};
+          data["time_left"].push(time_left);
           $.ajax({
               url:"/update_time",
               type:"POST",
