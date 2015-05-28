@@ -39,13 +39,11 @@ class HomeController < ApplicationController
       # Cleaning Data
       @i = 1
 
-      @header = @fileData[0].gsub("\r", "\n")
-      @header = @header.split("\n")[0]
+      @header = @fileData[0].split("\n")[0]
       @header = @header.gsub("\t", ",")
       @header = @header.split(",")
       @data = [];
       while @i < @fileData.length  do
-         @fileData[@i] = @fileData[@i].gsub("\r", "\n")
          @data.push(@fileData[@i].split("\n")[0])
          @i +=1
       end
