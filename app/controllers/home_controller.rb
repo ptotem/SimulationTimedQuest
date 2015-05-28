@@ -33,37 +33,45 @@ class HomeController < ApplicationController
 
   def importing_users
 
-    @fileData = params[:file].tempfile.to_a
+    if request.post? && params[:file].present? && params[:file].content_type.split('/')[1] == 'csv'
+      @fileData = params[:file].tempfile.to_a
 
-    # Cleaning Data
-    @i = 1
-    @header = @fileData[0].split("\n")[0]
-    @header = @header.split(",")
-    @data = [];
-    while @i < @fileData.length  do
-       @data.push(@fileData[@i].split("\n")[0])
-       @i +=1
+      # Cleaning Data
+      @i = 1
+      @header = @fileData[0].split("\n")[0]
+      @header = @header.gsub("\t", ",")
+      @header = @header.split(",")
+      @data = [];
+      while @i < @fileData.length  do
+         @data.push(@fileData[@i].split("\n")[0])
+         @i +=1
+      end
+
+      # Creating DB Enties
+      @i = 0
+      while @i < @data.length  do
+         @newUserData = @data[@i].gsub("\t", ",")
+         @newUserData = @newUserData.split(",")
+         @j = 0
+         @userObj = {}
+         while @j < @newUserData.length  do
+           @userObj[@header[@j]] = @newUserData[@j]
+           @j +=1
+         end
+
+         if !User.where(:email => @userObj["email"])[0]
+           User.create!(@userObj)
+         end
+         
+         @i +=1
+      end
+      redirect_to('/admin', notice: "Users Imported!")
+    else
+      redirect_to('/admin', notice: "Failed to Import Users")
     end
 
-    # Creating DB Enties
-    @i = 0
-    while @i < @data.length  do
-       @newUserData = @data[@i].split(",")
-       @j = 0
-       @userObj = {}
-       while @j < @newUserData.length  do
-         @userObj[@header[@j]] = @newUserData[@j]
-         @j +=1
-       end
+      
 
-       if !User.where(:email => @userObj["email"])[0]
-         User.create!(@userObj)
-       end
-       
-       @i +=1
-    end
-
-    redirect_to('/admin')
   end
 
 
