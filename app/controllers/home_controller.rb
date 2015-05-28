@@ -14,6 +14,58 @@ class HomeController < ApplicationController
     @userTime = @user.time_left
   end
 
+  def import_users
+    @user = current_user
+    @redirect = false
+    @redirectTo = ''
+
+    if @user.category != 'admin'
+      @redirect = true
+      @redirectTo = '/unauthorized'
+    end
+
+    if @redirect
+      redirect_to(@redirectTo, alert: "You are not permitted to view this page")
+    end
+
+    # render :layout => false
+  end
+
+  def importing_users
+
+    @fileData = params[:file].tempfile.to_a
+
+    # Cleaning Data
+    @i = 1
+    @header = @fileData[0].split("\n")[0]
+    @header = @header.split(",")
+    @data = [];
+    while @i < @fileData.length  do
+       @data.push(@fileData[@i].split("\n")[0])
+       @i +=1
+    end
+
+    # Creating DB Enties
+    @i = 0
+    while @i < @data.length  do
+       @newUserData = @data[@i].split(",")
+       @j = 0
+       @userObj = {}
+       while @j < @newUserData.length  do
+         @userObj[@header[@j]] = @newUserData[@j]
+         @j +=1
+       end
+
+       if !User.where(:email => @userObj["email"])[0]
+         User.create!(@userObj)
+       end
+       
+       @i +=1
+    end
+
+    redirect_to('/admin')
+  end
+
 
   def save_result
 

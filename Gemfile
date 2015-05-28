@@ -13,6 +13,8 @@ gem 'therubyracer'
 
 gem 'devise'
 gem 'cancan'
+gem 'roo'
+gem 'json'
 
 gem 'rails_admin'
 gem "rails_admin_import"
