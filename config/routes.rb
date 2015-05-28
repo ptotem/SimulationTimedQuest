@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'home/index'
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
   mount RailsAdminImport::Engine => '/rails_admin_import', :as => 'rails_admin_import'
+  
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -18,5 +19,9 @@ Rails.application.routes.draw do
   match '/quinterrogation2', to: 'home#quinterrogation2', via: [:get, :post]
   match '/game_end', to: 'home#game_end', via: [:get, :post]
   match '/game_complete', to: 'home#game_complete', via: [:get, :post]
+  match '/unauthorized', to: 'home#unauthorized', via: [:get, :post]
+
+  match '/import_users', to: 'home#import_users', via: [:get, :post]
+  match '/importing_users', to: 'home#importing_users', via: [:get, :post]
 
 end

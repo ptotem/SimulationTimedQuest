@@ -14,6 +14,66 @@ class HomeController < ApplicationController
     @userTime = @user.time_left
   end
 
+  def import_users
+    @user = current_user
+    @redirect = false
+    @redirectTo = ''
+
+    if @user.category != 'admin'
+      @redirect = true
+      @redirectTo = '/unauthorized'
+    end
+
+    if @redirect
+      redirect_to(@redirectTo, alert: "You are not permitted to view this page")
+    end
+
+    # render :layout => false
+  end
+
+  def importing_users
+
+    if request.post? && params[:file].present? && params[:file].content_type.split('/')[1] == 'csv'
+      @fileData = params[:file].tempfile.to_a
+
+      # Cleaning Data
+      @i = 1
+      @header = @fileData[0].split("\n")[0]
+      @header = @header.gsub("\t", ",")
+      @header = @header.split(",")
+      @data = [];
+      while @i < @fileData.length  do
+         @data.push(@fileData[@i].split("\n")[0])
+         @i +=1
+      end
+
+      # Creating DB Enties
+      @i = 0
+      while @i < @data.length  do
+         @newUserData = @data[@i].gsub("\t", ",")
+         @newUserData = @newUserData.split(",")
+         @j = 0
+         @userObj = {}
+         while @j < @newUserData.length  do
+           @userObj[@header[@j]] = @newUserData[@j]
+           @j +=1
+         end
+
+         if !User.where(:email => @userObj["email"])[0]
+           User.create!(@userObj)
+         end
+         
+         @i +=1
+      end
+      redirect_to('/admin', notice: "Users Imported!")
+    else
+      redirect_to('/admin', notice: "Failed to Import Users")
+    end
+
+      
+
+  end
+
 
   def save_result
 
@@ -65,23 +125,28 @@ class HomeController < ApplicationController
     @redirect = false
     @redirectTo = ''
 
-    if !@gs.quinterrogation
+    if @user.category == 'admin'
       @redirect = true
-      if @user.category = 'jr'
-        @redirectTo = '/quinterrogation1'
-      else
-        @redirectTo = '/quinterrogation2'
+      @redirectTo = '/admin'
+    else
+      if !@gs.quinterrogation
+        @redirect = true
+        if @user.category == 'jr'
+          @redirectTo = '/quinterrogation1'
+        else
+          @redirectTo = '/quinterrogation2'
+        end
       end
-    end
 
-    if !@gs.msq
-      @redirect = true
-      @redirectTo = '/msq'
-    end
+      if !@gs.msq
+        @redirect = true
+        @redirectTo = '/msq'
+      end
 
-    if !@gs.mcq
-      @redirect = true
-      @redirectTo = '/mcq'
+      if !@gs.mcq
+        @redirect = true
+        @redirectTo = '/mcq'
+      end
     end
 
     if @redirect
@@ -96,11 +161,13 @@ class HomeController < ApplicationController
 
     @gs = @user.game_status
 
-    if @gs.mcq
-      redirect_to('/msq')
-    else
-      @gs.mcq = true
-      @gs.save 
+    if @user.category != 'admin'
+      if @gs.mcq
+        redirect_to('/msq')
+      else
+        @gs.mcq = true
+        @gs.save 
+      end
     end
   end
 
@@ -110,17 +177,18 @@ class HomeController < ApplicationController
 
     @gs = @user.game_status
 
-    if @gs.msq
-      if @user.category = 'jr'
-        redirect_to('/quinterrogation1')
+    if @user.category != 'admin'
+      if @gs.msq
+        if @user.category == 'jr'
+          redirect_to('/quinterrogation1')
+        else
+          redirect_to('/quinterrogation2')
+        end
       else
-        redirect_to('/quinterrogation2')
+        @gs.msq = true
+        @gs.save 
       end
-    else
-      @gs.msq = true
-      @gs.save 
     end
-
   end
 
   def quinterrogation1
@@ -130,17 +198,18 @@ class HomeController < ApplicationController
 
     @gs = @user.game_status
 
-    if @user.category == 'sr'
-      redirect_to('/quinterrogation2')
-    else
-      if @gs.quinterrogation
-        redirect_to('/game_end')
+    if @user.category != 'admin'
+      if @user.category == 'sr'
+        redirect_to('/quinterrogation2')
       else
-        @gs.quinterrogation = true
-        @gs.save
-      end
-    end  
-
+        if @gs.quinterrogation
+          redirect_to('/game_end')
+        else
+          @gs.quinterrogation = true
+          @gs.save
+        end
+      end 
+    end
   end
 
   def quinterrogation2
@@ -150,17 +219,18 @@ class HomeController < ApplicationController
 
     @gs = @user.game_status
 
-    if @user.category == 'jr'
-      redirect_to('/quinterrogation1')
-    else
-      if @gs.quinterrogation
-        redirect_to('/game_end')
+    if @user.category != 'admin'
+      if @user.category == 'jr'
+        redirect_to('/quinterrogation1')
       else
-        @gs.quinterrogation = true
-        @gs.save
-      end
-    end 
-
+        if @gs.quinterrogation
+          redirect_to('/game_end')
+        else
+          @gs.quinterrogation = true
+          @gs.save
+        end
+      end 
+    end
   end
 
 end
