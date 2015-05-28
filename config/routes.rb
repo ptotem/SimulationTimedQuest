@@ -18,5 +18,6 @@ Rails.application.routes.draw do
   match '/quinterrogation2', to: 'home#quinterrogation2', via: [:get, :post]
   match '/game_end', to: 'home#game_end', via: [:get, :post]
   match '/game_complete', to: 'home#game_complete', via: [:get, :post]
+  match '/unauthorized', to: 'home#unauthorized', via: [:get, :post]
 
 end

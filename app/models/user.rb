@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
 
   private
   	def add_to_game_status
-  		GameStatus.create(user_id: self.id)
+      if self.category != 'admin'
+        GameStatus.create(user_id: self.id)
+      end
   	end
 end

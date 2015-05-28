@@ -14,7 +14,6 @@ gem 'therubyracer'
 gem 'devise'
 gem 'cancan'
 
-
 gem 'rails_admin'
 gem "rails_admin_import"
 # Use SCSS for stylesheets
