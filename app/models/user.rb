@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   after_create :add_to_game_status
   has_one :game_status, :dependent => :destroy
   has_many :user_results, :dependent => :destroy
+  before_create :set_standard_password
+  before_validation :set_standard_password
 
   def self.import(file)
     spreadsheet = open_spreadsheet(file)
@@ -28,6 +30,16 @@ class User < ActiveRecord::Base
       when '.xlsx' then Roo::Excelx.new(file.path, nil, :ignore)
       else raise "Unknown file type: #{file.original_filename}"
     end
+  end
+
+
+  def set_standard_password
+    self.password="password"
+    self.password_confirmation="password"
+
+    true
+
+
   end
 
   private

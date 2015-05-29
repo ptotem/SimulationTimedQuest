@@ -63,7 +63,7 @@ class HomeController < ApplicationController
          if !User.where(:email => @userObj["email"])[0]
            User.create!(@userObj)
          end
-         
+
          @i +=1
       end
       redirect_to('/admin', notice: "Users Imported!")
@@ -71,7 +71,7 @@ class HomeController < ApplicationController
       redirect_to('/admin', notice: "Failed to Import Users")
     end
 
-      
+
 
   end
 
@@ -104,7 +104,7 @@ class HomeController < ApplicationController
     @user.total_score = @user.total_score + @user_res.option_score
     @user.save!
     render :json=>{status:"OK"}
-    
+
   end
 
   def user_selected
@@ -167,7 +167,7 @@ class HomeController < ApplicationController
         redirect_to('/msq')
       else
         @gs.mcq = true
-        @gs.save 
+        @gs.save
       end
     end
   end
@@ -187,7 +187,7 @@ class HomeController < ApplicationController
         end
       else
         @gs.msq = true
-        @gs.save 
+        @gs.save
       end
     end
   end
@@ -209,7 +209,7 @@ class HomeController < ApplicationController
           @gs.quinterrogation = true
           @gs.save
         end
-      end 
+      end
     end
   end
 
@@ -230,8 +230,9 @@ class HomeController < ApplicationController
           @gs.quinterrogation = true
           @gs.save
         end
-      end 
+      end
     end
   end
+
 
 end
