@@ -5,6 +5,7 @@ class HomeController < ApplicationController
     @user.time_left = params[:time_left][0]
     @user.time_spent = (7200 - @user.time_left)/60
     @user.save!
+    sign_in(:user,@user)
     render :json=>{status:"OK"}
   end
 

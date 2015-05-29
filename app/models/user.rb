@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   has_one :game_status, :dependent => :destroy
   has_many :user_results, :dependent => :destroy
   before_create :set_standard_password
-  before_validation :set_standard_password
+  before_validation :set_standard_password, :on => :create
 
   def self.import(file)
     spreadsheet = open_spreadsheet(file)
