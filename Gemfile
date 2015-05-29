@@ -11,6 +11,7 @@ gem 'mysql2'
 gem 'execjs'
 gem 'therubyracer'
 
+
 gem 'devise'
 gem 'cancan'
 gem 'roo'
@@ -56,4 +57,3 @@ group :development, :test do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
-
