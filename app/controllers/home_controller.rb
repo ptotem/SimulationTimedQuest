@@ -78,7 +78,10 @@ class HomeController < ApplicationController
       end
       redirect_to('/admin', notice: "Users Imported!")
     else
-      redirect_to('/admin', notice: "Failed to Import Users")
+      puts(request.post?)
+      puts(params[:file].present?)
+      puts(params[:file].original_filename.split(".") == "csv")
+      # redirect_to('/admin', notice: "Failed to Import Users")
     end
 
       
