@@ -34,7 +34,7 @@ class HomeController < ApplicationController
   def importing_users
     # ONLY MICROSOFT EXCEL CSV(COMMA DELIMITED) AND CSV (MS-DOS) FORMATS
 
-    if request.post? && params[:file].present? && params[:file].original_filename.split(".") == "csv"
+    if request.post? && params[:file].present? && params[:file].original_filename.split('.') == "csv"
       @fileData = params[:file].tempfile.to_a
 
       # render :json => @fileData
@@ -78,10 +78,7 @@ class HomeController < ApplicationController
       end
       redirect_to('/admin', notice: "Users Imported!")
     else
-      puts(request.post?)
-      puts(params[:file].present?)
-      puts(params[:file].original_filename.split(".") == "csv")
-      # redirect_to('/admin', notice: "Failed to Import Users")
+      redirect_to('/admin', notice: "Failed to Import Users")
     end
 
       
