@@ -1,40 +1,40 @@
-# MySQL.  Versions 5.0+ are recommended.
-default: &default
-  adapter: mysql2
-  encoding: utf8
-  pool: 5
-  username: root
-  password: p20o20e13
-
-development:
-  <<: *default
-  database: SimulationTimedQuest_development
-
-test:
-  <<: *default
-  database: SimulationTimedQuest_test
-
-production:
-  <<: *default
-  database: SimulationTimedQuest_production
-  username: SimulationTimedQuest
-  password: <%= ENV['SIMULATIONTIMEDQUEST_DATABASE_PASSWORD'] %>
-
-# # SQLite version 3.x
-# development:
-#   adapter: sqlite3
-#   database: db/development.sqlite3
+# # MySQL.  Versions 5.0+ are recommended.
+# default: &default
+#   adapter: mysql2
+#   encoding: utf8
 #   pool: 5
-#   timeout: 5000
+#   username: root
+#   password: p20o20e13
+
+# development:
+#   <<: *default
+#   database: SimulationTimedQuest_development
 
 # test:
-#   adapter: sqlite3
-#   database: db/test.sqlite3
-#   pool: 5
-#   timeout: 5000
+#   <<: *default
+#   database: SimulationTimedQuest_test
 
 # production:
-#   adapter: sqlite3
-#   database: db/production.sqlite3
-#   pool: 5
-#   timeout: 5000
+#   <<: *default
+#   database: SimulationTimedQuest_production
+#   username: SimulationTimedQuest
+#   password: <%= ENV['SIMULATIONTIMEDQUEST_DATABASE_PASSWORD'] %>
+
+# SQLite version 3.x
+development:
+  adapter: sqlite3
+  database: db/development.sqlite3
+  pool: 5
+  timeout: 5000
+
+test:
+  adapter: sqlite3
+  database: db/test.sqlite3
+  pool: 5
+  timeout: 5000
+
+production:
+  adapter: sqlite3
+  database: db/production.sqlite3
+  pool: 5
+  timeout: 5000
