@@ -34,6 +34,9 @@ class HomeController < ApplicationController
   def importing_users
     # ONLY MICROSOFT EXCEL CSV(COMMA DELIMITED) AND CSV (MS-DOS) FORMATS
 
+    render :text => request.post? && params[:file].present? && params[:file].original_filename.split('.') == "csv"
+    return
+    
     if request.post? && params[:file].present? && params[:file].original_filename.split('.') == "csv"
       @fileData = params[:file].tempfile.to_a
 
