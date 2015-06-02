@@ -1,4 +1,4 @@
-class DeviseCreateUsers < ActiveRecord::Migration  
+class DeviseCreateUsers < ActiveRecord::Migration
   def change
     create_table(:users) do |t|
       ## Database authenticatable
@@ -7,7 +7,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :category,           null: false, default: "jr"
       t.float :total_score,       null: false, default: 0
       t.integer :time_spent,        null: false, default: 0
-      t.integer :time_left,        null: false, default: 7200
+      t.integer :time_left,        null: false, default: 5400
       t.string :encrypted_password, null: false, default: ""
 
       ## Recoverable

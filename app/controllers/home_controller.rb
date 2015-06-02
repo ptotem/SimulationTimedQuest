@@ -3,10 +3,16 @@ class HomeController < ApplicationController
   def update_time
     @user = current_user
     @user.time_left = params[:time_left][0]
-    @user.time_spent = (7200 - @user.time_left)/60
+    @user.time_spent = (5400 - @user.time_left)/60
     @user.save!
-    sign_in(:user,@user)
-    render :json=>{status:"OK"}
+    @gs = @user.game_status
+
+    if @user.time_left == 3300
+      @gs.msq = true
+      @gs.mcq = true
+      @gs.save!
+    end
+    render :text=>@user.time_left
   end
 
 
@@ -33,33 +39,43 @@ class HomeController < ApplicationController
   end
 
   def importing_users
+    # ONLY MICROSOFT EXCEL CSV(COMMA DELIMITED) AND CSV (MS-DOS) FORMATS
 
-    if request.post? && params[:file].present? && params[:file].content_type.split('/')[1] == 'csv'
+    if request.post? && params[:file].present? && params[:file].original_filename.split('.')[1] == "csv"
       @fileData = params[:file].tempfile.to_a
 
-      # Cleaning Data
-      @i = 1
+      # render :json => @fileData
+      # return false
 
-      @header = @fileData[0].split("\n")[0]
-      @header = @header.gsub("\t", ",")
-      @header = @header.split(",")
-      @data = [];
+      # Cleaning Data
+      @i = 0
+      @lines = []
       while @i < @fileData.length  do
-         @data.push(@fileData[@i].split("\n")[0])
+         @currentLine = @fileData[@i].gsub("\n", "")
+         @currentLine = @currentLine.gsub("\r", "")
+         @currentLine = @currentLine.gsub("\t", ",")
+         @lines.push(@currentLine)
          @i +=1
       end
 
-      # Creating DB Enties
-      @i = 0
-      while @i < @data.length  do
-         @newUserData = @data[@i].gsub("\t", ",")
-         @newUserData = @newUserData.split(",")
+      # render :json => @lines
+      # return false
+
+      # Creating DB Entries
+      @header = @lines[0].split(",");
+
+      @i = 1
+      while @i < @lines.length  do
+         @currentLine = @lines[@i].split(",")
          @j = 0
          @userObj = {}
-         while @j < @newUserData.length  do
-           @userObj[@header[@j]] = @newUserData[@j]
+         while @j < @header.length  do
+           @userObj[@header[@j]] = @currentLine[@j]
            @j +=1
          end
+
+         # render :json => @userObj
+         # return false
 
          if !User.where(:email => @userObj["email"])[0]
            User.create!(@userObj)

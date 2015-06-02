@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20150512122110) do
     t.string   "category",               limit: 255, default: "jr", null: false
     t.float    "total_score",            limit: 24,  default: 0.0,  null: false
     t.integer  "time_spent",             limit: 4,   default: 0,    null: false
-    t.integer  "time_left",              limit: 4,   default: 7200, null: false
+    t.integer  "time_left",              limit: 4,   default: 5400, null: false
     t.string   "encrypted_password",     limit: 255, default: "",   null: false
     t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"

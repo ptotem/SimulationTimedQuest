@@ -7,8 +7,8 @@ class User < ActiveRecord::Base
   after_create :add_to_game_status
   has_one :game_status, :dependent => :destroy
   has_many :user_results, :dependent => :destroy
-  before_create :set_standard_password
-  before_validation :set_standard_password, :on => :create
+  # before_create :set_standard_password
+  # before_validation :set_standard_password, :on => :create
 
   def self.import(file)
     spreadsheet = open_spreadsheet(file)
@@ -32,15 +32,15 @@ class User < ActiveRecord::Base
     end
   end
 
-
-  def set_standard_password
-    self.password="password"
-    self.password_confirmation="password"
-
-    true
-
-
-  end
+  #
+  # def set_standard_password
+  #   self.password="password"
+  #   self.password_confirmation="password"
+  #
+  #   true
+  #
+  #
+  # end
 
   private
   	def add_to_game_status
