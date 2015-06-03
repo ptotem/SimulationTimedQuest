@@ -3,9 +3,16 @@ class HomeController < ApplicationController
   def update_time
     @user = current_user
     @user.time_left = params[:time_left][0]
-    @user.time_spent = (7200 - @user.time_left)/60
+    @user.time_spent = (5400 - @user.time_left)/60
     @user.save!
-    render :json=>{status:"OK"}
+    @gs = @user.game_status
+
+    if @user.time_left == 3300
+      @gs.msq = true
+      @gs.mcq = true
+      @gs.save!
+    end
+    render :text=>@user.time_left
   end
 
 
@@ -34,7 +41,7 @@ class HomeController < ApplicationController
   def importing_users
     # ONLY MICROSOFT EXCEL CSV(COMMA DELIMITED) AND CSV (MS-DOS) FORMATS
 
-    if request.post? && params[:file].present? && params[:file].original_filename.split('.') == "csv"
+    if request.post? && params[:file].present? && params[:file].original_filename.split('.')[1] == "csv"
       @fileData = params[:file].tempfile.to_a
 
       # render :json => @fileData
@@ -73,7 +80,7 @@ class HomeController < ApplicationController
          if !User.where(:email => @userObj["email"])[0]
            User.create!(@userObj)
          end
-         
+
          @i +=1
       end
       redirect_to('/admin', notice: "Users Imported!")
@@ -81,7 +88,7 @@ class HomeController < ApplicationController
       redirect_to('/admin', notice: "Failed to Import Users")
     end
 
-      
+
 
   end
 
@@ -114,7 +121,7 @@ class HomeController < ApplicationController
     @user.total_score = @user.total_score + @user_res.option_score
     @user.save!
     render :json=>{status:"OK"}
-    
+
   end
 
   def user_selected
@@ -177,7 +184,7 @@ class HomeController < ApplicationController
         redirect_to('/msq')
       else
         @gs.mcq = true
-        @gs.save 
+        @gs.save
       end
     end
   end
@@ -197,7 +204,7 @@ class HomeController < ApplicationController
         end
       else
         @gs.msq = true
-        @gs.save 
+        @gs.save
       end
     end
   end
@@ -219,7 +226,7 @@ class HomeController < ApplicationController
           @gs.quinterrogation = true
           @gs.save
         end
-      end 
+      end
     end
   end
 
@@ -240,8 +247,9 @@ class HomeController < ApplicationController
           @gs.quinterrogation = true
           @gs.save
         end
-      end 
+      end
     end
   end
+
 
 end

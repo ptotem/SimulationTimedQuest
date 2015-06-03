@@ -75,6 +75,9 @@
               data:JSON.stringify(data),
               contentType:"application/json",
               success:function (data) {
+                if(data == 3300){
+                    window.location = "/quinterrogation1"
+                }
 
               }
           });
@@ -90,7 +93,7 @@
             user_time_spent()
         })
 
-        
+
     </script>
 
 
