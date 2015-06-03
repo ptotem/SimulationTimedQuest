@@ -75,8 +75,11 @@
               data:JSON.stringify(data),
               contentType:"application/json",
               success:function (data) {
-                if(data == 3300){
+                if(window.location.pathname != '/quinterrogation1' && window.location.pathname != '/quinterrogation2' ) {
+                  if(data == 3300){
+                    alert("Time up for Sections I and II! Redirecting to Section III...")
                     window.location = "/quinterrogation1"
+                  }
                 }
 
               }
