@@ -41,54 +41,67 @@ class HomeController < ApplicationController
   def importing_users
     # ONLY MICROSOFT EXCEL CSV(COMMA DELIMITED) AND CSV (MS-DOS) FORMATS
 
-    if request.post? && params[:file].present? && params[:file].original_filename.split('.')[1] == "csv"
-      @fileData = params[:file].tempfile.to_a
+    @user = current_user
+    @redirect = false
+    @redirectTo = ''
 
-      # render :json => @fileData
-      # return false
-
-      # Cleaning Data
-      @i = 0
-      @lines = []
-      while @i < @fileData.length  do
-         @currentLine = @fileData[@i].gsub("\n", "")
-         @currentLine = @currentLine.gsub("\r", "")
-         @currentLine = @currentLine.gsub("\t", ",")
-         @lines.push(@currentLine)
-         @i +=1
-      end
-
-      # render :json => @lines
-      # return false
-
-      # Creating DB Entries
-      @header = @lines[0].split(",");
-
-      @i = 1
-      while @i < @lines.length  do
-         @currentLine = @lines[@i].split(",")
-         @j = 0
-         @userObj = {}
-         while @j < @header.length  do
-           @userObj[@header[@j]] = @currentLine[@j]
-           @j +=1
-         end
-
-         # render :json => @userObj
-         # return false
-
-         if !User.where(:email => @userObj["email"])[0]
-           User.create!(@userObj)
-         end
-
-         @i +=1
-      end
-      redirect_to('/admin', notice: "Users Imported!")
-    else
-      redirect_to('/admin', notice: "Failed to Import Users")
+    if @user.category != 'admin'
+      @redirect = true
+      @redirectTo = '/unauthorized'
     end
 
+    if @redirect
+      redirect_to(@redirectTo, alert: "You are not permitted to view this page")
 
+    else
+      if request.post? && params[:file].present? && params[:file].original_filename.split('.')[1] == "csv"
+        @fileData = params[:file].tempfile.to_a
+
+        # render :json => @fileData
+        # return false
+
+        # Cleaning Data
+        @i = 0
+        @lines = []
+        while @i < @fileData.length  do
+           @currentLine = @fileData[@i].gsub("\n", "")
+           @currentLine = @currentLine.gsub("\r", "")
+           @currentLine = @currentLine.gsub("\t", ",")
+           @lines.push(@currentLine)
+           @i +=1
+        end
+
+        # render :json => @lines
+        # return false
+
+        # Creating DB Entries
+        @header = @lines[0].split(",");
+
+        @i = 1
+        while @i < @lines.length  do
+           @currentLine = @lines[@i].split(",")
+           @j = 0
+           @userObj = {}
+           while @j < @header.length  do
+             @userObj[@header[@j]] = @currentLine[@j]
+             @j +=1
+           end
+
+           # render :json => @userObj
+           # return false
+
+           if !User.where(:email => @userObj["email"])[0]
+             User.create!(@userObj)
+           end
+
+           @i +=1
+        end
+        redirect_to('/admin', notice: "Users Imported!")
+      else
+        redirect_to('/admin', notice: "Failed to Import Users")
+      end
+
+    end
 
   end
 
@@ -147,24 +160,27 @@ class HomeController < ApplicationController
       @redirect = true
       @redirectTo = '/admin'
     else
-      if !@gs.quinterrogation
-        @redirect = true
-        if @user.category == 'jr'
-          @redirectTo = '/quinterrogation1'
-        else
-          @redirectTo = '/quinterrogation2'
+      if @userTime != 0
+        if !@gs.quinterrogation
+          @redirect = true
+          if @user.category == 'jr'
+            @redirectTo = '/quinterrogation1'
+          else
+            @redirectTo = '/quinterrogation2'
+          end
+        end
+
+        if !@gs.msq
+          @redirect = true
+          @redirectTo = '/msq'
+        end
+
+        if !@gs.mcq
+          @redirect = true
+          @redirectTo = '/mcq'
         end
       end
 
-      if !@gs.msq
-        @redirect = true
-        @redirectTo = '/msq'
-      end
-
-      if !@gs.mcq
-        @redirect = true
-        @redirectTo = '/mcq'
-      end
     end
 
     if @redirect
