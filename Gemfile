@@ -5,8 +5,8 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.1'
 
 # Use mysql as the database for Active Record
-# gem 'mysql2'
-gem 'sqlite3'
+gem 'mysql2'
+# gem 'sqlite3'
 
 gem 'execjs'
 gem 'therubyracer'
