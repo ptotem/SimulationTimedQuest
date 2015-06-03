@@ -12,10 +12,5 @@ User.create([
 		email: "admin@starscribble.in",
 		category: "admin",
 		password: "admin123"
-	},	{
-			name: "Random",
-			email: "random@starscribble.in",
-			category: "sr",
-			password: "password"
-		}
+	}
 ])
