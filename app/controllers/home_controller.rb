@@ -12,6 +12,14 @@ class HomeController < ApplicationController
       @gs.mcq = true
       @gs.save!
     end
+
+    if @user.time_left == 0
+      @gs.msq = true
+      @gs.mcq = true
+      @gs.quinterrogation = true
+      @gs.save!
+    end
+    
     render :text=>@user.time_left
   end
 
