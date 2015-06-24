@@ -12,7 +12,8 @@
       <div class="navbar-inner" style="position: relative">
         <div class="container">
           <div class="navbar-header">
-            <a href="#" class="brand" onclick="javascript:window.location.href='/'; return false;"><img src="/assets/logo.png" class="logo"></a>
+            <img src="/assets/logo.png" class="logo">
+            <!-- <a href="#" class="brand" onclick="javascript:window.location.href='/'; return false;"><img src="/assets/logo.png" class="logo"></a> -->
           </div>
           <% if user_signed_in? %>
               <div class="name-block" style="overflow: hidden; position: absolute; right: 300px; top: 5px;">
@@ -28,9 +29,9 @@
                     <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu" role="menu">
-                    <li>
+                    <!-- <li>
                       <%= link_to "Change your password", edit_user_registration_path %>
-                    </li>
+                    </li> -->
                     <li>
                       <%= link_to "Sign out", destroy_user_session_path,:class => "trigger_signout", :method => :delete,:style => 'display: none'%>
                       <%= link_to "Sign out", destroy_user_session_path,:class => "sign_out_link", :method => :delete%>
