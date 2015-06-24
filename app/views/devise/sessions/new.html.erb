@@ -39,14 +39,14 @@
 
           <%= f.password_field :password, autocomplete: "off", :placeholder => "Password", :class => "form-control", :required=>true %>
 
-          <% if devise_mapping.rememberable? -%>
+          <!-- <% if devise_mapping.rememberable? -%>
               <div class="text-style" style="padding: 2% 0 2% 0;">
                 <%= f.check_box :remember_me,:class => "check_box_style" %>
                 <%= f.label :remember_me %>
               </div>
-          <% end -%>
+          <% end -%> -->
 
-          <%= f.submit "Sign in", :class => "btn btn-lg  btn-block button_style", :style=>"margin-top:0;" %>
+          <%= f.submit "Sign in", :class => "btn btn-lg  btn-block button_style", :style=>"margin-top:4%;" %>
 
       <% end %>
 
@@ -56,12 +56,12 @@
 
     </div>
 
-    <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-        <!--<div style="text-align: center; padding-top: 5px; font-size: 14px;">-->
-        <div class="text_style_bottom">
+    <!--  <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+        <div style="text-align: center; padding-top: 5px; font-size: 14px;">
+       <div class="text_style_bottom">
           <%= link_to "Create an account", new_registration_path(resource_name), :class => "color-text-black" %>
         </div>
-    <% end -%>
+    <% end -%>-->
 
     <hr>
     <p class="text-center">Site best viewed in Mozilla Firefox and Google Chrome.</p>
