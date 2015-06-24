@@ -1,4 +1,4 @@
-MySQL.  Versions 5.0+ are recommended.
+# MySQL.  Versions 5.0+ are recommended.
 default: &default
   adapter: mysql2
   encoding: utf8
@@ -19,22 +19,3 @@ production:
   database: SimulationTimedQuest_production
   username: SimulationTimedQuest
   password: <%= ENV['SIMULATIONTIMEDQUEST_DATABASE_PASSWORD'] %>
-
-SQLite version 3.x
-# development:
-#   adapter: sqlite3
-#   database: db/development.sqlite3
-#   pool: 5
-#   timeout: 5000
-#
-# test:
-#   adapter: sqlite3
-#   database: db/test.sqlite3
-#   pool: 5
-#   timeout: 5000
-# 
-# production:
-#   adapter: sqlite3
-#   database: db/production.sqlite3
-#   pool: 5
-#   timeout: 5000
