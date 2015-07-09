@@ -10,6 +10,7 @@
 
         clock = $('.clock').FlipClock(userTime, {
             clockFace: 'HourlyCounter',
+            autoStart: false,
             countdown: true,
             callbacks: {
                 interval: function(time){
@@ -34,6 +35,7 @@
             }
 
         });
+        clock.start();
 
     });
 
