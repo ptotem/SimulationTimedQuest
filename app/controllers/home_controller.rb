@@ -245,6 +245,7 @@ class HomeController < ApplicationController
   def mcq
     @user = current_user
     @userTime = @user.time_left
+    @userClockLeft = 5400 - @user.time_spent
     @user.last_started_at = Time.now
 
     @gs = @user.game_status
@@ -263,6 +264,7 @@ class HomeController < ApplicationController
   def msq
     @user = current_user
     @userTime = @user.time_left
+    @userClockLeft = 5400 - @user.time_spent
     @user.last_started_at = Time.now
 
     @gs = @user.game_status
@@ -286,6 +288,7 @@ class HomeController < ApplicationController
     # for 'junior' users
     @user = current_user
     @userTime = @user.time_left
+    @userClockLeft = 5400 - @user.time_spent
     @user.last_started_at = DateTime.now.strftime('%s')
 
     @gs = @user.game_status
@@ -309,6 +312,7 @@ class HomeController < ApplicationController
     # for 'senior' users
     @user = current_user
     @userTime = @user.time_left
+    @userClockLeft = 5400 - @user.time_spent
     @user.last_started_at = DateTime.now.strftime('%s')
 
     @gs = @user.game_status
