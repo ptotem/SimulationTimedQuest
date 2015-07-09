@@ -48,8 +48,8 @@ class HomeController < ApplicationController
       @game_score = @game_score + @user_res.option_score;
       @user_res.save!
     end
-    @user.time_spent = (Time.now - @user.last_started_at).to_i
-    @user.time_left = (5400 - @user.time_spent)/60
+    @user.time_left = params["time_left"]#(Time.now - @user.last_started_at).to_i
+    @user.time_spent = (5400 - @user.time_left)/60
     @gs = @user.game_status
     if @user.time_left == 3300
       @gs.msq = true
@@ -284,7 +284,6 @@ class HomeController < ApplicationController
   end
 
   def quinterrogation1
-    require 'date'
     # for 'junior' users
     @user = current_user
     @userTime = @user.time_left
@@ -308,7 +307,6 @@ class HomeController < ApplicationController
   end
 
   def quinterrogation2
-    require 'date'
     # for 'senior' users
     @user = current_user
     @userTime = @user.time_left

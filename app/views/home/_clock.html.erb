@@ -6,7 +6,7 @@
     var userTime;
     $(document).ready(function() {
 
-        userTime = <%= @userClockLeft %>
+        userTime = <%= @userTime %>
 
         clock = $('.clock').FlipClock(userTime, {
             clockFace: 'HourlyCounter',
