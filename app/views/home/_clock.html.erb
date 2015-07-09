@@ -12,6 +12,21 @@
             clockFace: 'HourlyCounter',
             countdown: true,
             callbacks: {
+                interval: function(time){
+                   var time=clock.getTime().time;
+                   if(time==3300){
+                       $('.main-wrapper-game').hide()
+                        if(window.location.pathname != '/quinterrogation1' && window.location.pathname != '/quinterrogation2' ) {
+                            alert("Time's up! We are redirecting you to the last section now!")
+                            window.location = "/quinterrogation1"
+                        } else {
+                          if(window.location.pathname != '/mcq' || window.location.pathname != '/msq' || window.location.pathname != '/quinterrogation1' || window.location.pathname != '/quinterrogation2') {
+                            alert("Time's up! Your score has been submitted!")
+                            window.location = "/game_end"
+                          }
+                        }
+                   }
+                },
                 stop: function() {
                     $('.main-wrapper-game').hide()
                     alert("Your Time is Up ")
