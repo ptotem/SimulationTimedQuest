@@ -1,6 +1,8 @@
 class HomeController < ApplicationController
 
   def update_time
+    render :text=>2000
+    return
     @user = current_user
     @user.time_left = params[:time_left][0]
     @user.time_spent = (5400 - @user.time_left)/60
@@ -20,6 +22,49 @@ class HomeController < ApplicationController
       @gs.save!
     end
     
+    render :text=>@user.time_left
+  end
+
+  def finish_game
+    @user = current_user
+    @game_score = 0;
+    params["user_results"].each do |key,result_obj|
+      @section = result_obj[:section]
+      @question = result_obj[:question]
+      @selected_option = result_obj[:selected_option]
+      @correct_option = result_obj[:correct_option]
+      @option_score = result_obj[:option_score]
+      @option_status = result_obj[:option_status]
+      @user_res = UserResult.create!(
+        :user_id => current_user.id,
+        :user_name => current_user.name,
+        :section => @section,
+        :question => @question,
+        :selected_option => @selected_option,
+        :correct_option => @correct_option,
+        :option_status => @option_status,
+        :option_score => @option_score
+      )
+      @game_score = @game_score + @user_res.option_score;
+      @user_res.save!
+    end
+    @user.time_spent = (Time.now - @user.last_started_at).to_i
+    @user.time_left = (5400 - @user.time_spent)/60
+    @gs = @user.game_status
+    if @user.time_left == 3300
+      @gs.msq = true
+      @gs.mcq = true
+      @gs.save!
+    end
+    if @user.time_left == 0
+      @gs.msq = true
+      @gs.mcq = true
+      @gs.quinterrogation = true
+      @gs.save!
+    end
+    @user.total_score = @user.total_score + @game_score
+    @user.save!
+    # render :json=>{status:"OK"}
     render :text=>@user.time_left
   end
 
@@ -200,6 +245,7 @@ class HomeController < ApplicationController
   def mcq
     @user = current_user
     @userTime = @user.time_left
+    @user.last_started_at = Time.now
 
     @gs = @user.game_status
 
@@ -211,11 +257,13 @@ class HomeController < ApplicationController
         @gs.save
       end
     end
+    @user.save!
   end
 
   def msq
     @user = current_user
     @userTime = @user.time_left
+    @user.last_started_at = Time.now
 
     @gs = @user.game_status
 
@@ -234,9 +282,11 @@ class HomeController < ApplicationController
   end
 
   def quinterrogation1
+    require 'date'
     # for 'junior' users
     @user = current_user
     @userTime = @user.time_left
+    @user.last_started_at = DateTime.now.strftime('%s')
 
     @gs = @user.game_status
 
@@ -255,9 +305,11 @@ class HomeController < ApplicationController
   end
 
   def quinterrogation2
+    require 'date'
     # for 'senior' users
     @user = current_user
     @userTime = @user.time_left
+    @user.last_started_at = DateTime.now.strftime('%s')
 
     @gs = @user.game_status
 

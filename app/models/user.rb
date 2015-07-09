@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
     (2..spreadsheet.last_row).each do |i|
       # puts "email :- #{spreadsheet.row(i)[0]}"
       # puts "name :- #{spreadsheet.row(i)[1]}"
-      @user = User.create(:email=>spreadsheet.row(i)[0], :name=>spreadsheet.row(i)[1], :password=>"password", :password_confirmation=>"password")
+      @user = User.create(:email=>spreadsheet.row(i)[0], :name=>spreadsheet.row(i)[1], :password=>"password", :password_confirmation=>"password", :time_left=>5400)
       @user.save!
     end
   end

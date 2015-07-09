@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   root 'home#game_complete'
   match '/update_time', :to => "home#update_time", via: [:get, :post], :as=> "update_time"
   match '/save_result', to: 'home#save_result', via: [:get, :post]
+  match '/finish_game', to: 'home#finish_game', via: [:get, :post]
   match '/user_selected', to: 'home#user_selected', via: [:get, :post]
   match '/simulation', to: 'home#simulation', via: [:get, :post]
   match '/mcq', to: 'home#mcq', via: [:get, :post]
