@@ -1,0 +1,110 @@
+
+/*#ptotemy-game {*/
+    /*width: 640px;*/
+    /*height: 480px;*/
+    /*background: rgba(1, 1, 1, 1);*/
+    /*position: fixed;*/
+    /*top: 0;*/
+    /*left: 0;*/
+/*}*/
+
+/*#entities, #items {*/
+    /*display: none;*/
+/*}*/
+
+/*.environment, .location {*/
+    /*height: 100%;*/
+    /*width: 100%;*/
+    /*position: absolute;*/
+/*}*/
+
+#howtoenv #howtoholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#howtoenv {
+    z-index: 9999;
+}
+
+#howto {
+    position: absolute;
+    color: rgb(225, 225, 225);
+
+    max-width: 200px;
+    width: 200px;
+    max-height: 150px;
+    height: 150px;
+
+    overflow: hidden;
+    opacity: 0;
+}
+
+#howtoArrow {
+    position: absolute;
+    width: 45px;
+}
+#howtoArrow img {
+    width: 100%;
+}
+
+#howtoContent {
+    position: absolute;
+    width: 136px;
+    height: 136px;
+    max-height: 136px;
+    max-width: 136px;
+    display: table;
+    text-align: center;
+    /*background: rgba(35, 35, 35, 0.8);*/
+    border-radius: 5px;
+    /*font-size: 0.8em;*/
+    overflow: hidden;
+    padding: 7px;
+}
+
+#howtoContent span {
+
+    display: table-cell;
+    vertical-align: middle;
+    overflow: hidden;
+}
+
+#howtoContent img {
+    width: 100%;
+}
+
+#inthowto .location{
+    color: whitesmoke;
+    height: auto;
+    width: auto;
+    padding: 5px;
+    border-radius: 5px;
+    background: rgba(120, 120, 120, 0.5);
+    display: none;
+}
+
+.howto-left {
+    transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+}
+
+.howto-right {
+    /*transform: rotate(180deg);*/
+    /*-ms-transform: rotate(180deg);*/
+    /*-webkit-transform: rotate(180deg);*/
+}
+
+.howto-top {
+    transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+}
+
+.howto-bottom {
+    transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+}
