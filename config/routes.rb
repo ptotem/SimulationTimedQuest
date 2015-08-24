@@ -24,5 +24,5 @@ Rails.application.routes.draw do
 
   match '/import_users', to: 'home#import_users', via: [:get, :post]
   match '/importing_users', to: 'home#importing_users', via: [:get, :post]
-
+  match '/getReport', to: 'home#getReport', via: [:get, :post]
 end

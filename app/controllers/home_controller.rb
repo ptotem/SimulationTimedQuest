@@ -329,5 +329,63 @@ class HomeController < ApplicationController
     end
   end
 
+  def getReport
+    #render :text => "Sunny"
+    #return
+    #@userresult = UserResult.group_by(&:user_id)
+    #render :json => @userresult
+    #return
+    require 'find'
+    require 'fileutils'
+    book = Spreadsheet::Workbook.new
+    sheet = book.create_worksheet
+    sheet[0, 0]="User ID"
+    sheet[0, 1]="Name"
+    sheet[0, 2]="Email"
+    sheet[0, 3]="Category"
+    sheet[0, 4]="MRQ"
+    sheet[0, 5]="Simulation"
+    sheet[0, 6]="SRQ"
+    sheet[0, 7]="Total Score"
+    sheet[0, 8]="Time Spent"
+
+    @user = User.all
+    @game_types= [{:name => "Multiple Response Questions", :tq => 5, :max_score => 5},{:name => "Simulation", :tq=> 50, :max_score => 70},{:name =>"Single Response Questions", :tq=>25, :max_score => 25 }]
+    @end_result = []
+    @user.each_with_index do |u, index|
+    	@users_res = UserResult.where(:user_id => u.id)
+	gr = []
+        ts = 0
+	@game_types.each do |gt|
+  	  t =  @users_res.select{ |ur| ur.section == gt[:name]}
+          t0 = t.map{ |k| k.option_score}.reduce(:+)
+          if t.count > gt[:tq]
+	    calculated_score = ((t0/t.count)*gt[:tq]).round rescue 0
+	  else
+	    calculated_score = t0 rescue 0
+          end
+          ts = ts + calculated_score rescue 0
+          t1 = {:total_section => t.count, :section_score => t0, :tq => gt[:tq], :max_score => gt[:max_score], :calculated_score => calculated_score}
+          gr << t1
+        end
+        ur = {:id => u.id, :name => u.name, :email => u.email, :category => u.category, :mrq => gr[0][:calculated_score], :simulation => gr[1][:calculated_score], :srq=> gr[2][:calculated_score], :total_score => ts, :time_spent => u.time_spent, :analytics => gr}
+        sheet[(index+1),0] = ur[:id]
+        sheet[(index+1),1] = ur[:name]
+        sheet[(index+1),2] = ur[:email]
+        sheet[(index+1),3] = ur[:category]
+        sheet[(index+1),4] = ur[:mrq]
+        sheet[(index+1),5] = ur[:simulation]
+        sheet[(index+1),6] = ur[:srq]
+        sheet[(index+1),7] = ur[:total_score]      
+	sheet[(index+1),8] = ur[:time_spent]
+
+	@end_result << ur
+    end
+    book.write "#{Rails.root}/public/out12.xls"
+    File.chmod(0777, "#{Rails.root}/public/out12.xls")
+    send_file "#{Rails.root}/public/out12.xls"
+    #render :json => @end_result
+    #return
+  end
 
 end
